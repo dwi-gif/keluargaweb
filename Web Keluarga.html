@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Gallery</title>
+    <style>
+        /* CSS */
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .file-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .upload-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .image-container {
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Family Gallery</h1>
+
+        <form id="upload-form">
+            <label for="file-input" class="file-label">Choose a Photo</label>
+            <input type="file" id="file-input" accept="image/*" class="file-input">
+            <button type="button" onclick="uploadFile()" class="upload-btn">Upload</button>
+        </form>
+
+        <div class="image-container">
+            <img id="uploaded-image" alt="Uploaded Photo">
+        </div>
+    </div>
+
+    <script>
+// script.js
+
+document.addEventListener('DOMContentLoaded', function () {
+    const fileInput = document.getElementById('file-input');
+    const uploadedImage = document.getElementById('uploaded-image');
+
+    // Pemeriksaan apakah ada gambar yang sudah disimpan sebelumnya di localStorage
+    const storedImage = localStorage.getItem('uploadedImage');
+    if (storedImage) {
+        uploadedImage.src = storedImage;
+    }
+
+    // Mengatur fungsi untuk menghandle perubahan pada input file
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                uploadedImage.src = e.target.result;
+
+                // Simpan data URL gambar di localStorage
+                localStorage.setItem('uploadedImage', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
